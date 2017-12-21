@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+  	<meta charset="utf-8"/>
+  </head>
+  <body>
+  	<script type='text/javascript'>
+  		var BABYLON = BABYLON || {};
+  		BABYLON.ASM = {
+		  print: function(text) { console.log(text); },
+		  printErr: function(text) { console.error(text); },
+		  destroy : function(obj) {console.trace("destroy");},
+		  preInit : function(){console.trace("preInit");},
+		  preRun : function(){console.trace("preRun");},
+		  onRuntimeInitialized : function(){onReady();}
+		};
+		Float32ArrayPointer = function(data){
+			this.data = new Float32Array(data);
+			this.nDataBytes = this.data.length * this.data.BYTES_PER_ELEMENT;
+			this.dataPtr = BABYLON.ASM._malloc(this.nDataBytes);
+			this.dataHeap = new Uint8Array(BABYLON.ASM.HEAPU8.buffer, this.dataPtr, this.nDataBytes);
+			this.dataHeap.set(new Uint8Array(this.data.buffer));
+			this.pointer = this.dataHeap.byteOffset;
+  		}
+  		Float32ArrayPointer.prototype.release = function(){
+  			BABYLON.ASM._free(this.dataHeap.byteOffset);
+  		}
+		Float32ArrayPointer.prototype.toArray = function(){
+  			return new Float32Array(this.dataHeap.buffer, this.dataHeap.byteOffset, this.data.length);
+  		}
+		function onReady(){
+  			var vector = new Float32ArrayPointer([0,1,2]);
+  			var transformation = new Float32ArrayPointer([0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]);
+  			var result = new Float32ArrayPointer([0,0,0]);
+  			BABYLON.ASM._TransformCoordinatesToRef(vector.pointer,transformation.pointer,result.pointer);
+  			var output = result.toArray();
+  			console.log(output);
+  			vector.release();
+  			transformation.release();
+  			result.release();	
+  		}
+  	</script>
+  	<script async type="text/javascript" src="bablylon.math.js"></script>
+  </body>
+      
+ </html>
