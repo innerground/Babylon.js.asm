@@ -1,6 +1,6 @@
-*Instructions for Windows
-*EMSDK_HOME is the full path where EMSDK will be cloned
-*BABYLON_JS_ASM_HOME_ is the full path where the code will be cloned
+* Instructions for Windows
+* EMSDK_HOME is the full path where EMSDK will be cloned
+* BABYLON_JS_ASM_HOME is the full path where the code will be cloned
 
 
 # Install emscripten :
