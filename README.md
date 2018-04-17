@@ -1,3 +1,9 @@
-** Note : Instructions for Windows **
+**Note : Instructions for Windows**
 
-* Install emscripten : http://kripken.github.io/emscripten-site/docs/getting_started/downloads.html
+# Install emscripten :
+
+```
+git clone https://github.com/juj/emsdk
+cd emdsdk
+```
+
